@@ -1,0 +1,106 @@
+<!DOCTYPE html >
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JTOPO虚线流动demo</title>
+		<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+		<script src="jtp/jtopo-0.4.8-min.js" type="text/javascript"></script>	
+		
+		<script type="text/javascript">
+			 $(document).ready(function(){
+				 CanvasRenderingContext2D.prototype.JTopoDashedLineTo = function(a, b, c, d, e) {
+					 var animespeed=(new Date())/100;
+					 "undefined" == typeof e && (e = 5);
+					 var f = c - a,//x轴差
+						 g = d - b,//y轴差
+						 h = Math.floor(Math.sqrt(f * f + g * g)),//勾股定理,直线长度
+						 i = 0 >= e ? h: h / e,//虚线段数
+						 j = g / h * e,
+						 k = f / h * e;
+					 this.beginPath();
+					 animespeed=animespeed%(e*2);
+					 var txs=f/h*animespeed;
+					 var tys=g/h*animespeed;
+					 for (var l = 0; i > l; l++) {
+						 // l % 2 ? this.lineTo(a + l * k+txs, b + l * j+tys) : this.moveTo((a + l * k+txs)>(a+i*k)?(a + l * k):(a + l * k+txs), (b + l * j+tys)>(b + i * j)?(b + l * j):(b + l * j+tys));
+						 var m = a,
+						 	 n = b;
+						 if(f > 0){
+						 	m = (a + l * k+txs)>(a+i*k)?(a + i * k):(a + l * k+txs);
+						 }
+						 else if(f < 0){
+						 	m = (a + l * k+txs)<(a+i*k)?(a + i * k):(a + l * k+txs);
+						 }
+						 if(g > 0){
+					 		n = (b + l * j+tys)>(b + i * j)?(b + i * j):(b + l * j+tys);
+					 	 }
+					 	 else if(g < 0){
+					 		n = (b + l * j+tys)<(b + i * j)?(b + i * j):(b + l * j+tys);
+					 	 }
+						 l % 2 ? this.lineTo(m, n) : this.moveTo(m, n)
+					 };
+					 this.stroke()
+				 };
+				
+            	var canvas = document.getElementById('canvas'); //舞台           
+            	var stage = new JTopo.Stage(canvas);//场景
+            	
+            	var scene = new JTopo.Scene(stage);
+
+            	var node = new JTopo.Node("Hello");                            
+            	node.setLocation(10, 10);
+            	scene.add(node);
+
+            	var node2 = new JTopo.Node("Hello");                            
+            	node2.setLocation(700, 10);
+            	scene.add(node2);
+				
+            	var node3 = new JTopo.Node("Hello");                            
+            	node3.setLocation(380, 200);
+            	scene.add(node3);
+
+				var node4 = new JTopo.Node("Hello");                            
+            	node4.setLocation(10, 400);
+            	scene.add(node4);
+
+            	var node5 = new JTopo.Node("Hello");                            
+            	node5.setLocation(700, 400);
+            	scene.add(node5);
+
+
+				var link1=new JTopo.Link(node,node3);
+				//var link1 = new JTopo.FoldLink(node,node2);
+				link1.dashedPattern =10;
+				link1.lineWidth = 3;
+				 link1.strokeColor="255,0,255";
+				scene.add(link1)
+
+				//var link2 = new JTopo.FoldLink(node2,node3);
+				var link2 = new JTopo.Link(node5,node3);
+				link2.dashedPattern =10;
+				link2.lineWidth = 3;
+				 link2.strokeColor="255,0,255";
+				scene.add(link2)
+
+				var link3 = new JTopo.FoldLink(node3,node4);
+				link3.dashedPattern =10;
+				link3.lineWidth = 3;
+				 link3.strokeColor="255,0,255";
+				scene.add(link3)
+
+				var link4 = new JTopo.FoldLink(node3,node2);
+				link4.dashedPattern =10;
+				link4.lineWidth = 3;
+				//link4.direction = 'vertical';
+				 link4.strokeColor="255,0,255";
+				scene.add(link4)
+			
+        });
+        
+		</script>
+	</head>
+	<body>
+			<canvas width="800"height="500"id="canvas"style=" background-color:#EEEEEE; border:1px solid #444;">
+			</canvas>
+	</body>
+</html>
