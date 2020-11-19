@@ -4,4 +4,4 @@
 
 2.连线为折线时，折线拐角处的显示问题；
 
-参考：https://github.com/darknessjs/jtopo-unit
+原文：https://github.com/darknessjs/jtopo-unit
