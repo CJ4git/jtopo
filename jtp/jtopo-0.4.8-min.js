@@ -2574,7 +2574,9 @@ function(JTopo) {
                       a.moveTo(b[0].x, b[0].y);
                     for (var c = 1; c < b.length; c++) {
 
-                        null == this.dashedPattern ? a.lineTo(b[c].x, b[c].y) : a.JTopoDashedLineTo(b[c - 1].x, b[c - 1].y, b[c].x, b[c].y, this.dashedPattern)
+                        null == this.dashedPattern ? (
+                          (null==this.PointPathColor?a.lineTo(b[c].x, b[c].y):a.JtopoDrawPointPath(b[c - 1].x, b[c - 1].y, b[c].x, b[c].y, a.strokeStyle,this.PointPathColor))
+                        ) : a.JTopoDashedLineTo(b[c - 1].x, b[c - 1].y, b[c].x, b[c].y, this.dashedPattern)
                     };
                     if (a.stroke(), a.closePath(), null != this.arrowsRadius) {
                         var d = b[b.length - 2],
@@ -5781,7 +5783,9 @@ function(a) {
             a.moveTo(b[0].x, b[0].y);
             for (var c = 1; c < b.length; c++) {
 
-                null == this.dashedPattern ? a.lineTo(b[c].x, b[c].y) : a.JTopoDashedLineTo(b[c - 1].x, b[c - 1].y, b[c].x, b[c].y, this.dashedPattern)
+                null == this.dashedPattern ? (
+                    (null==this.PointPathColor?a.lineTo(b[c].x, b[c].y):a.JtopoDrawPointPath(b[c - 1].x, b[c - 1].y, b[c].x, b[c].y, a.strokeStyle,this.PointPathColor))
+                ) : a.JTopoDashedLineTo(b[c - 1].x, b[c - 1].y, b[c].x, b[c].y, this.dashedPattern)
             };
             if (a.stroke(), a.closePath(), null != this.arrowsRadius) {
                 var d = b[b.length - 2],
